@@ -1,0 +1,12 @@
+<div class="login">
+    <div class="container_login">
+        <h2 class="titulo fuente_textos_titulos">Iniciar Sesión</h2>
+        <form class="center fuente_textos" (ngSubmit)="login()">
+            <label class="label_login" for="username">Email:</label>
+            <input [(ngModel)]="loginRequest!.email" type="email" name="email" required><br><br>
+            <label class="label_login" for="password">Password:</label>
+            <input [(ngModel)]="loginRequest!.password" type="password" name="password" required><br><br>
+            <button type="submit" class="boton_login fuente_textos">Entrar</button>
+        </form>
+    </div>
+</div>
