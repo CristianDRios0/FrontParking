@@ -2,9 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LayoutComponent } from './layout/layout.component';
 import { RouterModule, Routes } from '@angular/router';
+import { CeldasModule } from '../celdas/celdas.module';
 
 const routes: Routes = [
-  {path: '', component: LayoutComponent}
+  {
+    path: '', 
+    component: LayoutComponent, 
+    children: [
+      {path: 'listar-celdas', loadChildren: () => import('../celdas/celdas.module').then(lc => lc.CeldasModule)}
+    ]
+  }
 ]
 
 @NgModule({
@@ -13,7 +20,8 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    CeldasModule
   ],
   exports: [
     RouterModule

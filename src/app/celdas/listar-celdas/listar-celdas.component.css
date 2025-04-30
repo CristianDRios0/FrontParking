@@ -1,0 +1,53 @@
+.celdas_content{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+    padding: 20px;
+    background-color: rgb(33, 47, 60);
+    border-radius: 10px;
+}
+
+.cell {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+}
+
+.cell:hover {
+    transform: scale(1.05);
+}
+
+.libre {
+    background-color: #4CAF50;
+}
+
+.ocupado {
+    background-color: #F44336;
+}
+
+.reservado {
+    background-color: #FF9800;
+}
+
+.title{
+    background-color: rgb(33, 47, 60);
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 30px;
+    color: rgb(51, 187, 255);
+    border-radius: 10px;
+}
+
+.crud_panel {
+    margin: 10px;
+    display: flex;
+    justify-content: flex-end;
+}

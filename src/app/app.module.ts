@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideHttpClient } from '@angular/common/http';
 import { LayoutModule } from './layout/layout.module';
+import { CeldasModule } from './celdas/celdas.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { LayoutModule } from './layout/layout.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    LayoutModule
+    LayoutModule,
+    CeldasModule
   ],
   providers: [
     provideHttpClient()

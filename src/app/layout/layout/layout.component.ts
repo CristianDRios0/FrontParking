@@ -8,12 +8,4 @@ import { Component } from '@angular/core';
 })
 export class LayoutComponent {
 
-  constructor() {
-    console.log('🔵 LayoutComponent CARGADO');
-  }
-
-  ngOnInit(): void {
-    console.log('🟢 LayoutComponent INICIALIZADO');
-  }
-
 }

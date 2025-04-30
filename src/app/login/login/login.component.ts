@@ -23,7 +23,7 @@ export class LoginComponent {
     this._loginService.login(this.loginRequest).subscribe({
       next: (response) => {
         console.log(response);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home/listar-celdas']);
       },
       error: (error) => {
         console.log(error);

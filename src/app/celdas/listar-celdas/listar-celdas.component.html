@@ -1,0 +1,16 @@
+<div class="title">
+    <h2>SISTEMA PARQUEADERO</h2>
+</div>
+<div class="crud_panel">
+    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalCrearCelda" id="btnAbrirModalCelda">
+        <i class="bi bi-plus-lg"></i>
+        Crear Celda
+    </button>
+</div>
+<div class="celdas_content">
+    <div class="cell" 
+    *ngFor="let celda of celdas" 
+    [ngClass]="{'libre': celda.estado === 'libre', 'ocupado': celda.estado === 'ocupado', 'reservado': celda.estado === 'reservado'}">
+        {{celda.codigo}}
+    </div>
+</div>   
