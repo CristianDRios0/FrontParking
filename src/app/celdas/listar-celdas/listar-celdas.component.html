@@ -2,7 +2,7 @@
     <h2>SISTEMA PARQUEADERO</h2>
 </div>
 <div class="crud_panel">
-    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalCrearCelda" id="btnAbrirModalCelda">
+    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalCrearCelda" id="btnAbrirModalCelda" (click)="limpiarCeldaSeleccionada()">
         <i class="bi bi-plus-lg"></i>
         Crear Celda
     </button>
@@ -10,12 +10,13 @@
 <div class="celdas_content">
     <div class="cell" 
     *ngFor="let celda of celdas" 
-    [ngClass]="{'libre': celda.estado === 'libre', 'ocupado': celda.estado === 'ocupado', 'reservado': celda.estado === 'reservado'}">
+    [ngClass]="{'libre': celda.estado === 'libre', 'ocupado': celda.estado === 'ocupado', 'reservado': celda.estado === 'reservado'}"
+    (click)="celdaActual(celda)">
         {{celda.codigo}}
     </div>
 </div>   
 
-<!-- Modal para crear celda-->
+<!-- Modal para crear celda -->
 
 <div class="modal fade" id="modalCrearCelda" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -32,6 +33,32 @@
                     Crear Celda
                 </button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para información de celda -->
+
+<div class="modal fade" id="infoCeldaModal" tabindex="-1" aria-hidden="true" [ngClass]="{'show': detallesModal}">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="detalleCeldaContent">
+            <app-detalle-celda [celdaDetalleInput]="celdaSeleccionada"></app-detalle-celda>
+        </div>
+    </div>
+</div>
+
+<!-- Modal crear parqueo -->
+
+<div class="modal fade" id="crearParqueoModal" tabindex="-1" aria-hidden="true" [ngClass]="{'show': parquearModal}">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="crearParqueoModalContent">
+        <div class="modal-header">
+            <h5 class="modal-title">Parquear</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="formularioParqueoBody">
+            
+        </div>
         </div>
     </div>
 </div>

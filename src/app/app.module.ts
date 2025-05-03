@@ -8,7 +8,7 @@ import { CeldasModule } from './celdas/celdas.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

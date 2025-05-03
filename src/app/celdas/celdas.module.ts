@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListarCeldasComponent } from './listar-celdas/listar-celdas.component';
 import { CrearCeldaComponent } from './crear-celda/crear-celda.component';
 import { FormsModule } from '@angular/forms';
+import { DetalleCeldaComponent } from './detalle-celda/detalle-celda.component';
 
 const routes: Routes = [
   {path: '', component: ListarCeldasComponent}
@@ -12,7 +13,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     ListarCeldasComponent,
-    CrearCeldaComponent
+    CrearCeldaComponent,
+    DetalleCeldaComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ const routes: Routes = [
   exports: [
     RouterModule,
     ListarCeldasComponent,
-    CrearCeldaComponent
+    CrearCeldaComponent,
+    DetalleCeldaComponent
   ]
 })
 export class CeldasModule { }
