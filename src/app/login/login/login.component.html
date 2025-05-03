@@ -1,12 +1,20 @@
 <div class="login">
     <div class="container_login">
         <h2 class="titulo fuente_textos_titulos">Iniciar Sesión</h2>
-        <form class="center fuente_textos" (ngSubmit)="login()">
+        <form class="center fuente_textos" (ngSubmit)="login()" #loginForm="ngForm">
             <label class="label_login" for="username">Email:</label>
-            <input [(ngModel)]="loginRequest!.email" type="email" name="email" required><br><br>
+            <div *ngIf="loginEmail.invalid && loginEmail.touched" class="error_alert">
+                <span *ngIf="loginEmail.errors?.['required']">El correo electronico es obligatorio</span>
+                <span *ngIf="loginEmail.errors?.['email']">El formato del correo electronico es invalido</span>
+            </div>
+            <input [(ngModel)]="loginRequest!.email" type="email" name="email" #loginEmail="ngModel" required><br><br>
             <label class="label_login" for="password">Password:</label>
-            <input [(ngModel)]="loginRequest!.password" type="password" name="password" required><br><br>
-            <button type="submit" class="boton_login fuente_textos">Entrar</button>
+            <div *ngIf="loginPassword.invalid && loginPassword.touched" class="error_alert">
+                <span *ngIf="loginPassword.errors?.['required']">La contraseña es obligatoria</span>
+                <span *ngIf="loginPassword.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</span>
+            </div>
+            <input [(ngModel)]="loginRequest!.password" type="password" name="password" #loginPassword="ngModel" required><br><br>
+            <button type="submit" class="boton_login fuente_textos" [disabled]="loginForm.invalid">Entrar</button>
         </form>
     </div>
 </div>

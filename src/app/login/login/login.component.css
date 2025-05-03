@@ -15,7 +15,7 @@
 
 .container_login {
     width: 20%;
-    height: 25%;
+    height: auto;
     min-height: max-content;
     min-width: max-content;
     display: flex;
@@ -46,13 +46,14 @@
 }
 
 form input {
-    height: 20px;
+    height: 40px;
     width: 80%;
     border-radius: 40px;
     padding: 5px;
     margin: 0px 5px;
     text-align: center;
     font-family: "Josefin Sans", sans-serif;
+    box-sizing: border-box;
 }
 
 .boton_login {
@@ -62,4 +63,17 @@ form input {
     border-radius: 20px;
     background: linear-gradient(to right, #ff00ff, #9900ff);
     color: white;
+}
+
+.boton_login:disabled {
+    background-color: gray;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.error_alert {
+    color: red;
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 15px;
+    margin-top: -5px; 
 }

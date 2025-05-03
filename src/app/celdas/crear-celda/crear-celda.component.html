@@ -1,0 +1,20 @@
+<form #formCelda="ngForm">
+    <label for="codigo">Codigo</label>
+    <input type="text" class="form-control" placeholder="Ingrese el codigo para la nueva celda" id="codigo" name="codigo" required
+    [(ngModel)]="celdaInput!.codigo">
+    <label for="estado">Estado</label>
+    <select class="form-control" name="estado" id="estado" required
+    [(ngModel)]="celdaInput!.estado">
+        <option value="" disabled selected>Seleccione un estado</option>
+        <option value="libre">Libre</option>
+        <option value="ocupado">Ocupada</option>
+        <option value="reservado">Reservada</option>
+    </select>
+    <label for="tipo">Tipo</label>
+    <select class="form-control" name="tipo" id="tipo" required
+    [(ngModel)]="celdaInput!.tipo">
+        <option value="" disabled selected>Seleccione un tipo</option>
+        <option value="automovil">Automovil</option>
+        <option value="moto">Moto</option>
+    </select>
+</form>

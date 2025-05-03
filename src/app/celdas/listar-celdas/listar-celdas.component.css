@@ -51,3 +51,20 @@
     display: flex;
     justify-content: flex-end;
 }
+
+/*Clases para las modales*/
+
+.modal-content {
+    background-color: rgb(52, 73, 94);
+}
+
+.modal-title {
+    color: rgb(51, 187, 255);
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 30px;
+    align-items: center;
+}
+
+.btn-close {
+    filter: invert(1);
+}
