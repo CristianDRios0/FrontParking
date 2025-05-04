@@ -42,7 +42,12 @@
 <div class="modal fade" id="infoCeldaModal" tabindex="-1" aria-hidden="true" [ngClass]="{'show': detallesModal}">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" id="detalleCeldaContent">
-            <app-detalle-celda [celdaDetalleInput]="celdaSeleccionada"></app-detalle-celda>
+            <app-detalle-celda 
+            [celdaDetalleInput]="celdaSeleccionada"
+            [celdaParqueoDetalleInput]="parqueoSeleccionado"
+            [celdaVehiculoDetalleInput]="vehiculoSeleccionado"
+            [celdaClienteDetalleInput]="clienteSeleccionado">
+            </app-detalle-celda>
         </div>
     </div>
 </div>

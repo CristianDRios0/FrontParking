@@ -1,14 +1,10 @@
 <div class="modal-header">
-    <h5 class="modal-title">Detalle de Celda:</h5>
+    <h5 class="modal-title">Detalle de Celda: {{celdaDetalleInput!.codigo}}</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-
-        <p class="texto_detalle"><strong>Placa: {{celdaDetalleInput!.tipo}}</strong> </p>
-        <p class="texto_detalle"><strong>Cliente:</strong> </p>
-
-        <p>No hay vehículo asignado actualmente.</p>
-
+        <p class="texto_detalle" *ngIf="celdaVehiculoDetalleInput"><strong>Placa: {{celdaVehiculoDetalleInput!.getPlaca()}}</strong> </p>
+        <p class="texto_detalle" *ngIf="celdaClienteDetalleInput"><strong>Cliente: {{celdaClienteDetalleInput!.getNombre()}}</strong> </p>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

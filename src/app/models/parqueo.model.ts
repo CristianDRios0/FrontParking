@@ -1,18 +1,14 @@
-import { Celda } from "./celda.model";
-import { Tarifa } from "./tarifa.model";
-import { Vehiculo } from "./vehiculo.model";
-
 export class Parqueo {
-    private vehiculoId: Vehiculo;
-    private celdaId: Celda;
-    private tarifaId: Tarifa;
+    private vehiculoId: number;
+    private celdaId: number;
+    private tarifaId: number;
     private estado: 'activo' | 'finalizado' 
     private id?: number;
     private fechaEntrada?: Date;
     private fechaSalida?: Date;
     private totalPagado?: number;
 
-    constructor(vehiculoId: Vehiculo, celdaId: Celda, tarifaId: Tarifa, estado: 'activo' | 'finalizado', id?: number, fechaEntrada?: Date, fechaSalida?: Date, totalPagado?: number) {
+    constructor(vehiculoId: number, celdaId: number, tarifaId: number, estado: 'activo' | 'finalizado', id?: number, fechaEntrada?: Date, fechaSalida?: Date, totalPagado?: number) {
         this.vehiculoId = vehiculoId;
         this.celdaId = celdaId;
         this.tarifaId = tarifaId;
@@ -23,15 +19,15 @@ export class Parqueo {
         this.totalPagado = totalPagado;
     }
 
-    getVehiculoId(): Vehiculo {
+    getVehiculoId(): number {
         return this.vehiculoId;
     }
 
-    getCeldaId(): Celda {
+    getCeldaId(): number {
         return this.celdaId;
     }
 
-    getTarifaId(): Tarifa {
+    getTarifaId(): number {
         return this.tarifaId;
     }
 
@@ -55,15 +51,15 @@ export class Parqueo {
         return this.totalPagado;
     }
 
-    setVehiculoId(vehiculoId: Vehiculo): void {
+    setVehiculoId(vehiculoId: number): void {
         this.vehiculoId = vehiculoId;
     }
 
-    setCeldaId(celdaId: Celda): void {
+    setCeldaId(celdaId: number): void {
         this.celdaId = celdaId;
     }
 
-    setTarifaId(tarifaId: Tarifa): void {
+    setTarifaId(tarifaId: number): void {
         this.tarifaId = tarifaId;
     }
 

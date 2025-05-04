@@ -15,6 +15,10 @@ export class Cliente {
         this.id = id
     }
 
+    getId(): number | undefined {
+        return this.id;
+    }
+
     getNombre(): string {
         return this.nombre;
     }

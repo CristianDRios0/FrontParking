@@ -2,6 +2,9 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Celda } from '../../models/celda.model';
 import { Modal } from 'bootstrap';
 import { CrearCeldaComponent } from '../crear-celda/crear-celda.component';
+import { Parqueo } from '../../models/parqueo.model';
+import { Vehiculo } from '../../models/vehiculo.model';
+import { Cliente } from '../../models/cliente.model';
 
 @Component({
   selector: 'app-listar-celdas',
@@ -11,18 +14,37 @@ import { CrearCeldaComponent } from '../crear-celda/crear-celda.component';
 })
 export class ListarCeldasComponent {
 
+  //Variables globales del componente
+
+  celdaSeleccionada: Celda = new Celda('', '', ''); // variable para el biding de datos desde la celda seleccionada
+  vehiculoSeleccionado: Vehiculo | undefined; // variable para el biding de datos para el vehiculo encontrado en el parqueo
+  clienteSeleccionado: Cliente | undefined; // variable para el biding de datos para el cliente encontrado en el parqueo
+  parqueoSeleccionado: Parqueo | undefined;
+  detallesModal: boolean = false; //Variable para controlar si se muestra la modal detalles en el metodo celdaActual
+  parquearModal: boolean = false; //Variable para controlar si se muestra la modal parquear en el metodo celdaActual
+
   @ViewChild(CrearCeldaComponent) crearCeldaComponent!: CrearCeldaComponent;
 
   celdas: Celda[] = [
-    new Celda('A10', 'automovil', 'libre'),
-    new Celda('A20', 'moto', 'ocupado'),
-    new Celda('A30', 'automovil', 'ocupado')
+    new Celda('A10', 'automovil', 'libre', 1),
+    new Celda('A20', 'moto', 'ocupado', 2),
+    new Celda('A30', 'automovil', 'ocupado', 3)
   ]
 
-  //Variables globales del componente
-  celdaSeleccionada: Celda = new Celda('', '', ''); // variable para el biding de datos desde la celda seleccionada
-  detallesModal: boolean = false; //Variable para controlar si se muestra la modal detalles en el metodo celdaActual
-  parquearModal: boolean = false; //Variable para controlar si se muestra la modal parquear en el metodo celdaActual
+  parqueos: Parqueo[] = [
+    new Parqueo(1, 2, 1, 'activo', 1, new Date(), undefined, undefined),
+    new Parqueo(2, 3, 1, 'activo', 2, new Date(), undefined, undefined)
+  ]
+
+  vehiculos: Vehiculo[] = [
+    new Vehiculo('ABC123', 1, 1),
+    new Vehiculo('DEF456', 2, 2),
+  ]
+
+  clientes: Cliente[] = [
+    new Cliente('Juan Perez', 1, 'ocasional', new Date(), new Date(), 1),
+    new Cliente('Maria Lopez', 2, 'ocasional', new Date(), new Date(), 2),
+  ]
 
   //Metodo para crear la celda
   crearCelda() {
@@ -40,6 +62,17 @@ export class ListarCeldasComponent {
   // Metodo para definir cual celda mostrar en funcion del estado de la celda aplicando la blase Modal de Bootstrap
   celdaActual(celda: Celda) {
     this.celdaSeleccionada = celda;
+    const parqueo = this.getParqueoByCelda(celda.id!);
+    if (parqueo) {
+      const vehiculo = this.getVehiculoById(parqueo.getVehiculoId());
+      if (vehiculo) {
+        const clienteId = vehiculo.getClienteId();
+        if (clienteId !== undefined){
+          this.getClienteById(clienteId);
+        }
+      }
+    }
+
     if (celda.estado === 'ocupado' || celda.estado === 'reservado') {
       this.detallesModal = true;
       this.parquearModal = false;
@@ -65,5 +98,27 @@ export class ListarCeldasComponent {
     ven los detalles de una celda antes de crear una nueva celda*/
   limpiarCeldaSeleccionada() {
     this.celdaSeleccionada = new Celda('', '', '');
+  }
+
+  //Metodo para buscar el parqueo por codigo de la celda y poder pasar los datos para proyectarlos en la modal de detalles
+  getParqueoByCelda(celdaId: number): Parqueo | undefined {
+    const parqueo = this.parqueos.find(p => p.getCeldaId()  === celdaId);
+    this.parqueoSeleccionado = parqueo;
+    console.log(parqueo);
+    return parqueo;
+  }
+
+  getVehiculoById(vehiculoId: number): Vehiculo | undefined {
+    const vehiculo = this.vehiculos.find(v => v.getId() === vehiculoId);
+    this.vehiculoSeleccionado = vehiculo;
+    console.log(vehiculo);
+    return vehiculo;
+  }
+
+  getClienteById(clienteId: number): Cliente | undefined {
+    const cliente = this.clientes.find(c => c.getId() === clienteId);
+    this.clienteSeleccionado = cliente;
+    console.log(cliente);
+    return cliente;
   }
 }
