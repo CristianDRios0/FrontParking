@@ -42,12 +42,24 @@
 <div class="modal fade" id="infoCeldaModal" tabindex="-1" aria-hidden="true" [ngClass]="{'show': detallesModal}">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" id="detalleCeldaContent">
-            <app-detalle-celda 
-            [celdaDetalleInput]="celdaSeleccionada"
-            [celdaParqueoDetalleInput]="parqueoSeleccionado"
-            [celdaVehiculoDetalleInput]="vehiculoSeleccionado"
-            [celdaClienteDetalleInput]="clienteSeleccionado">
-            </app-detalle-celda>
+            <div class="modal-header">
+                <h5 class="modal-title">Detalle de Celda: {{celdaSeleccionada.codigo}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <app-detalle-celda 
+                [celdaDetalleInput]="celdaSeleccionada"
+                [celdaParqueoDetalleInput]="parqueoSeleccionado"
+                [celdaVehiculoDetalleInput]="vehiculoSeleccionado"
+                [celdaClienteDetalleInput]="clienteSeleccionado">
+                </app-detalle-celda>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success generar-pago-btn" data-bs-toggle="modal" data-bs-target="#registrarPagoModal" id="btnAbrirModalPago">
+                        Generar Pago
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -62,8 +74,24 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="formularioParqueoBody">
-            
+            <app-crear-parqueo [celdaParqueoInput]="celdaSeleccionada"></app-crear-parqueo>
         </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal crear pago -->
+
+<div class="modal fade" id="registrarPagoModal" tabindex="-1" aria-labelledby="registrarPagoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registrarPagoModalLabel">Registrar Pago</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="registrarPagoModalBody">
+               
+            </div>
         </div>
     </div>
 </div>

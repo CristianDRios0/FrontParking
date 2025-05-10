@@ -5,9 +5,12 @@ import { ListarCeldasComponent } from './listar-celdas/listar-celdas.component';
 import { CrearCeldaComponent } from './crear-celda/crear-celda.component';
 import { FormsModule } from '@angular/forms';
 import { DetalleCeldaComponent } from './detalle-celda/detalle-celda.component';
+import { ParqueoModule } from '../parqueo/parqueo.module';
 
 const routes: Routes = [
-  {path: '', component: ListarCeldasComponent}
+  {path: '', component: ListarCeldasComponent},
+  {path: 'crear-celda', component: CrearCeldaComponent},
+  {path: 'detalle-celda', component: DetalleCeldaComponent}
 ]
 
 @NgModule({
@@ -19,7 +22,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    FormsModule
+    FormsModule,
+    ParqueoModule
   ],
   exports: [
     RouterModule,

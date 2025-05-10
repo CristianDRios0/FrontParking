@@ -9,7 +9,8 @@ const routes: Routes = [
     path: '', 
     component: LayoutComponent, 
     children: [
-      {path: 'listar-celdas', loadChildren: () => import('../celdas/celdas.module').then(lc => lc.CeldasModule)}
+      {path: 'listar-celdas', loadChildren: () => import('../celdas/celdas.module').then(lc => lc.CeldasModule)},
+      {path: 'parqueo', loadChildren: () => import('../parqueo/parqueo.module').then(p => p.ParqueoModule)}
     ]
   }
 ]

@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { provideHttpClient } from '@angular/common/http';
 import { LayoutModule } from './layout/layout.module';
 import { CeldasModule } from './celdas/celdas.module';
+import { ParqueoModule } from './parqueo/parqueo.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { CeldasModule } from './celdas/celdas.module';
     BrowserModule,
     AppRoutingModule,
     LayoutModule,
-    CeldasModule
+    CeldasModule,
+    ParqueoModule
   ],
   providers: [
     provideHttpClient()

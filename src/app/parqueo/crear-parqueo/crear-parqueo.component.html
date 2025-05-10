@@ -1,0 +1,21 @@
+<form (ngSubmit)="parquear()" #formParqueo="ngForm">
+    <div *ngIf="vehiculoInput.invalid && vehiculoInput.touched" class="error_alert">
+        Debes seleccionar un vehiculo
+    </div>
+    <label for="vehiculo">Vehiculo</label>
+    <select name="vehiculo" id="vehiculo" [(ngModel)]="vehiculoSeleccionado" class="form-control" #vehiculoInput="ngModel" required>
+        <option [ngValue]="null" disabled>Seleccione un vehiculo</option>
+        <option *ngFor="let vehiculo of vehiculos" [ngValue]="vehiculo">{{vehiculo.getPlaca()}}</option>
+    </select>
+    <div *ngIf="tarifaInput.invalid && tarifaInput.touched" class="error_alert">
+        Debes seleccionar una tarifa
+    </div>
+    <label for="tarifa">Tarifa</label>
+    <select name="tarifa" id="tarifa" [(ngModel)]="tarifaSeleccionada" class="form-control" #tarifaInput="ngModel" required>
+        <option [ngValue]="null" disabled>Selccione una tarifa</option>
+        <option *ngFor="let tarifa of tarifas" [ngValue]="tarifa">{{tarifa.getMonto()}}</option>
+    </select>
+    <div class="boton-contenedor">
+        <button type="submit" class="btn btn-success" data-bs-dismiss="modal" [disabled]="formParqueo.invalid">Parquear</button>
+    </div>
+</form>

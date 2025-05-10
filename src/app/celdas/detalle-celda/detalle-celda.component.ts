@@ -16,4 +16,5 @@ export class DetalleCeldaComponent {
   @Input() celdaParqueoDetalleInput: Parqueo | undefined;
   @Input() celdaVehiculoDetalleInput: Vehiculo | undefined;
   @Input() celdaClienteDetalleInput: Cliente | undefined;
+
 }
