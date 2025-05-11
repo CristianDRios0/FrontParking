@@ -10,7 +10,7 @@
 <div class="celdas_content">
     <div class="cell" 
     *ngFor="let celda of celdas" 
-    [ngClass]="{'libre': celda.estado === 'libre', 'ocupado': celda.estado === 'ocupado', 'reservado': celda.estado === 'reservado'}"
+    [ngClass]="{'libre': celda.estado === 'Libre', 'ocupado': celda.estado === 'Ocupado', 'reservado': celda.estado === 'Reservado'}"
     (click)="celdaActual(celda)">
         {{celda.codigo}}
     </div>
@@ -26,12 +26,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="modal-body-content">
-                <app-crear-celda [celdaInput]="celdaSeleccionada"></app-crear-celda>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" (click)="crearCelda()" data-bs-dismiss="modal">
-                    Crear Celda
-                </button>
+                <app-crear-celda [celdaInput]="celdaSeleccionada" (celdaCreada)="getCeldas()"></app-crear-celda>
             </div>
         </div>
     </div>
@@ -74,7 +69,11 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="formularioParqueoBody">
-            <app-crear-parqueo [celdaParqueoInput]="celdaSeleccionada"></app-crear-parqueo>
+            <app-crear-parqueo 
+            [celdaParqueoInput]="celdaSeleccionada"
+            [vehiculoParqueoInput]="vehiculos"
+            [tarifasParqueoInput]="tarifas"
+            (crearParqueo)="getCeldas()"></app-crear-parqueo>
         </div>
         </div>
     </div>
@@ -90,7 +89,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body" id="registrarPagoModalBody">
-               
+                <app-crear-pago
+                [celdaPagoInput]="celdaSeleccionada"
+                [parqueoPagoInput]="parqueos"
+                [vehiculoPagoInput]="vehiculos"
+                [clientePagoInput]="clientes">
+                </app-crear-pago>
             </div>
         </div>
     </div>

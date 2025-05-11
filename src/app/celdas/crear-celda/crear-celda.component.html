@@ -1,20 +1,34 @@
-<form #formCelda="ngForm">
+<form #formCelda="ngForm" (ngSubmit)="crearCelda()">
     <label for="codigo">Codigo</label>
-    <input type="text" class="form-control" placeholder="Ingrese el codigo para la nueva celda" id="codigo" name="codigo" required
+    <input type="text" class="form-control" placeholder="Ingrese el codigo para la nueva celda" id="codigo" name="codigo" required #codigoInput="ngModel"
     [(ngModel)]="celdaInput!.codigo">
+    <div *ngIf="codigoInput.invalid && codigoInput.touched" class="error_alert">
+        Debes ingresar un codigo
+    </div>
     <label for="estado">Estado</label>
-    <select class="form-control" name="estado" id="estado" required
+    <select class="form-control" name="estado" id="estado" required #estadoInput="ngModel"
     [(ngModel)]="celdaInput!.estado">
-        <option value="" disabled selected>Seleccione un estado</option>
-        <option value="libre">Libre</option>
-        <option value="ocupado">Ocupada</option>
-        <option value="reservado">Reservada</option>
+        <option [ngValue]="null" disabled>Seleccione un estado</option>
+        <option [ngValue]="'libre'">Libre</option>
+        <option [ngValue]="'ocupado'">Ocupada</option>
+        <option [ngValue]="'reservado'">Reservada</option>
     </select>
+    <div *ngIf="estadoInput.invalid && estadoInput.touched" class="error_alert">
+        Debes seleccionar un estado inicial
+    </div>
     <label for="tipo">Tipo</label>
-    <select class="form-control" name="tipo" id="tipo" required
+    <select class="form-control" name="tipo" id="tipo" required #tipoInput="ngModel"
     [(ngModel)]="celdaInput!.tipo">
-        <option value="" disabled selected>Seleccione un tipo</option>
-        <option value="automovil">Automovil</option>
-        <option value="moto">Moto</option>
+        <option [ngValue]="null" disabled>Seleccione un tipo</option>
+        <option [ngValue]="'automovil'">Automovil</option>
+        <option [ngValue]="'moto'">Moto</option>
     </select>
+    <div *ngIf="tipoInput.invalid && tipoInput.touched" class="error_alert">
+        Debes seleccionar un tipo
+    </div>
+    <div class="boton-contenedor">
+        <button type="submit" class="btn btn-success" data-bs-dismiss="modal" [disabled]="formCelda.invalid">
+            Crear Celda
+        </button>
+    </div>
 </form>

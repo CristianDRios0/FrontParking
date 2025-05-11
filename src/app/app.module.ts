@@ -6,6 +6,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { LayoutModule } from './layout/layout.module';
 import { CeldasModule } from './celdas/celdas.module';
 import { ParqueoModule } from './parqueo/parqueo.module';
+import { PagosModule } from './pagos/pagos.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ParqueoModule } from './parqueo/parqueo.module';
     AppRoutingModule,
     LayoutModule,
     CeldasModule,
-    ParqueoModule
+    ParqueoModule,
+    PagosModule
   ],
   providers: [
     provideHttpClient()

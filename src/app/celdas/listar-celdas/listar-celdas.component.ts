@@ -1,10 +1,16 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Celda } from '../../models/celda.model';
 import { Modal } from 'bootstrap';
 import { CrearCeldaComponent } from '../crear-celda/crear-celda.component';
 import { Parqueo } from '../../models/parqueo.model';
 import { Vehiculo } from '../../models/vehiculo.model';
 import { Cliente } from '../../models/cliente.model';
+import { CeldaService } from '../../services/celda.service';
+import { ParqueoService } from '../../services/parqueo.service';
+import { VehiculoService } from '../../services/vehiculo.service';
+import { ClienteService } from '../../services/cliente.service';
+import { TarifaService } from '../../services/tarifa.service';
+import { Tarifa } from '../../models/tarifa.model';
 
 @Component({
   selector: 'app-listar-celdas',
@@ -13,6 +19,20 @@ import { Cliente } from '../../models/cliente.model';
   styleUrl: './listar-celdas.component.css'
 })
 export class ListarCeldasComponent {
+
+  constructor(private _celdaService: CeldaService, 
+    private _parqueoService: ParqueoService, 
+    private _vehiculoService: VehiculoService, 
+    private _clienteService: ClienteService,
+    private _tarifaService: TarifaService) {}
+
+  ngOnInit() {
+    this.getCeldas();
+    this.getParqueos();
+    this.getVehiculos();
+    this.getClientes();
+    this.getTarifas();
+  }
 
   //Variables globales del componente
 
@@ -25,62 +45,42 @@ export class ListarCeldasComponent {
 
   @ViewChild(CrearCeldaComponent) crearCeldaComponent!: CrearCeldaComponent;
 
-  celdas: Celda[] = [
-    new Celda('A10', 'automovil', 'libre', 1),
-    new Celda('A20', 'moto', 'ocupado', 2),
-    new Celda('A30', 'automovil', 'ocupado', 3)
-  ]
+  celdas: Celda[] = [];
+  parqueos: Parqueo[] = [];
+  vehiculos: Vehiculo[] = [];
+  clientes: Cliente[] = [];
+  tarifas: Tarifa[] = [];
 
-  parqueos: Parqueo[] = [
-    new Parqueo(1, 2, 1, 'activo', 1, new Date(), undefined, undefined),
-    new Parqueo(2, 3, 1, 'activo', 2, new Date(), undefined, undefined)
-  ]
-
-  vehiculos: Vehiculo[] = [
-    new Vehiculo('ABC123', 1, 1),
-    new Vehiculo('DEF456', 2, 2),
-  ]
-
-  clientes: Cliente[] = [
-    new Cliente('Juan Perez', 1, 'ocasional', new Date(), new Date(), 1),
-    new Cliente('Maria Lopez', 2, 'ocasional', new Date(), new Date(), 2),
-  ]
-
-  //Metodo para crear la celda
-  crearCelda() {
-    const form = this.crearCeldaComponent.celdaForm;
-    if (form.invalid) {
-      form.control.markAllAsTouched();
-      return;
-    }
-    this.celdas.push(new Celda(this.celdaSeleccionada!.codigo, this.celdaSeleccionada!.tipo, this.celdaSeleccionada!.estado));
+  /*Metodo para limpiar la celda seleccionada antes de abrir la modal de crear celda, este es necesario para no afectar el biding de datos cuando se
+  ven los detalles de una celda antes de crear una nueva celda*/
+  limpiarCeldaSeleccionada() {
     this.celdaSeleccionada = new Celda('', '', '');
-    (document.activeElement as HTMLElement).blur(); // cambia el foco del elemento boton para que el momento de cerrar la modal no quede el foco en este
-    console.log(this.celdas)
   }
 
   // Metodo para definir cual celda mostrar en funcion del estado de la celda aplicando la blase Modal de Bootstrap
-  celdaActual(celda: Celda) {
+  /*celdaActual(celda: Celda) {
     this.celdaSeleccionada = celda;
-    const parqueo = this.getParqueoByCelda(celda.id!);
-    if (parqueo) {
-      const vehiculo = this.getVehiculoById(parqueo.getVehiculoId());
-      if (vehiculo) {
-        const clienteId = vehiculo.getClienteId();
-        if (clienteId !== undefined){
-          this.getClienteById(clienteId);
-        }
-      }
-    }
+    this.getParqueoByCelda(celda.id!, (parqueo) => {
+      if (!parqueo) return; 
 
-    if (celda.estado === 'ocupado' || celda.estado === 'reservado') {
+      const vehiculoId = parqueo.vehiculoId;
+      this.getVehiculoById(vehiculoId, (vehiculo) => {
+        if (!vehiculo) return; 
+
+          const clienteId = vehiculo.clienteId;
+          if (clienteId !== undefined) {
+            this.getClienteById(clienteId, (cliente) => {})
+          }            
+      })        
+    });
+    
+    if (celda.estado === 'Ocupado' || celda.estado === 'Reservado') {
       this.detallesModal = true;
       this.parquearModal = false;
       const modalElementDetalle = document.getElementById('infoCeldaModal');
       if (modalElementDetalle) {
         const modalDetalle = new Modal(modalElementDetalle);
         modalDetalle.show();
-        console.log(celda)
       }
     } else {
       this.detallesModal = false;
@@ -89,36 +89,172 @@ export class ListarCeldasComponent {
       if (modalElementParquear) {
         const modalParquear = new Modal(modalElementParquear);
         modalParquear.show();
-        console.log(celda)
       }
     }
-  }
+  }*/
 
-  /*Metodo para limpiar la celda seleccionada antes de abrir la modal de crear celda, este es necesario para no afectar el biding de datos cuando se
-    ven los detalles de una celda antes de crear una nueva celda*/
-  limpiarCeldaSeleccionada() {
-    this.celdaSeleccionada = new Celda('', '', '');
+  celdaActual(celda: Celda) {
+  // 🧹 Limpiar variables antes de cargar nuevos datos
+  this.parqueoSeleccionado = undefined;
+  this.vehiculoSeleccionado = undefined;
+  this.clienteSeleccionado = undefined;
+  this.celdaSeleccionada = celda;
+
+  // 📌 Si la celda está ocupada o reservada, cargar info y mostrar modal
+  if (celda.estado === 'Ocupado' || celda.estado === 'Reservado') {
+    this.getParqueoByCelda(celda.id!, (parqueo) => {
+      if (!parqueo) return;
+
+      this.parqueoSeleccionado = parqueo;
+
+      const vehiculoId = parqueo.vehiculoId;
+      this.getVehiculoById(vehiculoId, (vehiculo) => {
+        if (!vehiculo) return;
+
+        this.vehiculoSeleccionado = vehiculo;
+
+        const clienteId = vehiculo.clienteId;
+        if (clienteId !== undefined) {
+          this.getClienteById(clienteId, (cliente) => {
+            this.clienteSeleccionado = cliente ?? undefined;
+
+            // ✅ Solo mostramos el modal cuando ya tenemos todos los datos
+            this.detallesModal = true;
+            this.parquearModal = false;
+            const modalElementDetalle = document.getElementById('infoCeldaModal');
+            if (modalElementDetalle) {
+              const modalDetalle = new Modal(modalElementDetalle);
+              modalDetalle.show();
+            }
+          });
+        } else {
+          // 🚨 Sin cliente, igual mostramos modal
+          this.detallesModal = true;
+          this.parquearModal = false;
+          const modalElementDetalle = document.getElementById('infoCeldaModal');
+          if (modalElementDetalle) {
+            const modalDetalle = new Modal(modalElementDetalle);
+            modalDetalle.show();
+          }
+        }
+      });
+    });
+  } else {
+    // 🚗 Celda libre, mostrar modal de parqueo directamente
+    this.detallesModal = false;
+    this.parquearModal = true;
+    const modalElementParquear = document.getElementById('crearParqueoModal');
+    if (modalElementParquear) {
+      const modalParquear = new Modal(modalElementParquear);
+      modalParquear.show();
+    }
   }
+}
+
 
   //Metodo para buscar el parqueo por codigo de la celda y poder pasar los datos para proyectarlos en la modal de detalles
-  getParqueoByCelda(celdaId: number): Parqueo | undefined {
-    const parqueo = this.parqueos.find(p => p.getCeldaId()  === celdaId);
-    this.parqueoSeleccionado = parqueo;
-    console.log(parqueo);
-    return parqueo;
+  getParqueoByCelda(celdaId: number, callback: (parqueo: Parqueo | null) => void): void {
+    this._parqueoService.getParqueoByCeldaId(celdaId).subscribe({
+      next: (data) => {
+        const parqueo = new Parqueo(
+          data.vehiculoId,
+          data.celdaId,
+          data.tarifaId,
+          data.estado,
+          data.fechaEntrada,
+          data.fechaSalida,
+          data.totalPagado,
+          data.id
+        );
+        this.parqueoSeleccionado = parqueo;
+        callback(parqueo);
+      },
+      error: (e) => {
+        console.log('Error al obtener parqueo:', e);
+        callback(null);
+      }
+    })
   }
 
-  getVehiculoById(vehiculoId: number): Vehiculo | undefined {
-    const vehiculo = this.vehiculos.find(v => v.getId() === vehiculoId);
-    this.vehiculoSeleccionado = vehiculo;
-    console.log(vehiculo);
-    return vehiculo;
+  getVehiculoById(vehiculoId: number, callback: (vehiculo: Vehiculo | null) => void): void {
+    this._vehiculoService.getVehiculoById(vehiculoId).subscribe({
+      next: (vehiculo) => {
+        this.vehiculoSeleccionado = vehiculo;
+        callback(vehiculo);
+      },
+      error: (e) => {
+        console.log('Error al obtener vehículo:', e)
+        callback(null);
+      }
+    })
   }
 
-  getClienteById(clienteId: number): Cliente | undefined {
-    const cliente = this.clientes.find(c => c.getId() === clienteId);
-    this.clienteSeleccionado = cliente;
-    console.log(cliente);
-    return cliente;
+  getClienteById(clienteId: number, callback: (cliente: Cliente | null) => void): void {
+    this._clienteService.getClienteById(clienteId).subscribe({
+      next: (cliente) => {
+        this.clienteSeleccionado = cliente;
+        callback(cliente);
+      },
+      error: (e) => {
+        console.log('Error al obtener cliente:', e);
+        callback(null);
+      }
+    })
+  }
+
+  getCeldas() {
+    this._celdaService.getCeldas().subscribe({
+      next: (rs) => {
+        this.celdas = rs;
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    })
+      
+  }
+
+  getParqueos() {
+    this._parqueoService.getParqueos().subscribe({
+      next: (rs) => {
+        this.parqueos = rs;
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    })
+  }
+
+  getVehiculos() {
+    this._vehiculoService.getVehiculos().subscribe({
+      next: (rs) => {
+        this.vehiculos = rs;
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    })
+  }
+
+  getClientes() {
+    this._clienteService.getClientes().subscribe({
+      next: (rs) => {
+        this.clientes = rs;
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    })
+  }
+
+  getTarifas() {
+    this._tarifaService.getCeldas().subscribe({
+      next: (rs) => {
+        this.tarifas = rs;
+      },
+      error: (e) => {
+        console.log('No se pudieron cargar las tarifas')
+      }
+    })
   }
 }

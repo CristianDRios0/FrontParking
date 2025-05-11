@@ -6,6 +6,7 @@ import { CrearCeldaComponent } from './crear-celda/crear-celda.component';
 import { FormsModule } from '@angular/forms';
 import { DetalleCeldaComponent } from './detalle-celda/detalle-celda.component';
 import { ParqueoModule } from '../parqueo/parqueo.module';
+import { PagosModule } from '../pagos/pagos.module';
 
 const routes: Routes = [
   {path: '', component: ListarCeldasComponent},
@@ -23,7 +24,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     FormsModule,
-    ParqueoModule
+    ParqueoModule,
+    PagosModule
   ],
   exports: [
     RouterModule,
