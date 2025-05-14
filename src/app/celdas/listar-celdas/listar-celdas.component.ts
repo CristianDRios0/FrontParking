@@ -58,8 +58,12 @@ export class ListarCeldasComponent {
   }
 
   // Metodo para definir cual celda mostrar en funcion del estado de la celda aplicando la blase Modal de Bootstrap
-  /*celdaActual(celda: Celda) {
+  celdaActual(celda: Celda) {
+    this.parqueoSeleccionado = undefined;
+    this.vehiculoSeleccionado = undefined;
+    this.clienteSeleccionado = undefined;
     this.celdaSeleccionada = celda;
+
     this.getParqueoByCelda(celda.id!, (parqueo) => {
       if (!parqueo) return; 
 
@@ -91,66 +95,7 @@ export class ListarCeldasComponent {
         modalParquear.show();
       }
     }
-  }*/
-
-  celdaActual(celda: Celda) {
-  // 🧹 Limpiar variables antes de cargar nuevos datos
-  this.parqueoSeleccionado = undefined;
-  this.vehiculoSeleccionado = undefined;
-  this.clienteSeleccionado = undefined;
-  this.celdaSeleccionada = celda;
-
-  // 📌 Si la celda está ocupada o reservada, cargar info y mostrar modal
-  if (celda.estado === 'Ocupado' || celda.estado === 'Reservado') {
-    this.getParqueoByCelda(celda.id!, (parqueo) => {
-      if (!parqueo) return;
-
-      this.parqueoSeleccionado = parqueo;
-
-      const vehiculoId = parqueo.vehiculoId;
-      this.getVehiculoById(vehiculoId, (vehiculo) => {
-        if (!vehiculo) return;
-
-        this.vehiculoSeleccionado = vehiculo;
-
-        const clienteId = vehiculo.clienteId;
-        if (clienteId !== undefined) {
-          this.getClienteById(clienteId, (cliente) => {
-            this.clienteSeleccionado = cliente ?? undefined;
-
-            // ✅ Solo mostramos el modal cuando ya tenemos todos los datos
-            this.detallesModal = true;
-            this.parquearModal = false;
-            const modalElementDetalle = document.getElementById('infoCeldaModal');
-            if (modalElementDetalle) {
-              const modalDetalle = new Modal(modalElementDetalle);
-              modalDetalle.show();
-            }
-          });
-        } else {
-          // 🚨 Sin cliente, igual mostramos modal
-          this.detallesModal = true;
-          this.parquearModal = false;
-          const modalElementDetalle = document.getElementById('infoCeldaModal');
-          if (modalElementDetalle) {
-            const modalDetalle = new Modal(modalElementDetalle);
-            modalDetalle.show();
-          }
-        }
-      });
-    });
-  } else {
-    // 🚗 Celda libre, mostrar modal de parqueo directamente
-    this.detallesModal = false;
-    this.parquearModal = true;
-    const modalElementParquear = document.getElementById('crearParqueoModal');
-    if (modalElementParquear) {
-      const modalParquear = new Modal(modalElementParquear);
-      modalParquear.show();
-    }
   }
-}
-
 
   //Metodo para buscar el parqueo por codigo de la celda y poder pasar los datos para proyectarlos en la modal de detalles
   getParqueoByCelda(celdaId: number, callback: (parqueo: Parqueo | null) => void): void {

@@ -1,8 +1,8 @@
-<form #formPago="ngForm">
+<form #formPago="ngForm" (ngSubmit)="generarPago()">
     <label for="monto">Monto a pagar</label>
-    <input type="number" name="monto" id="monto" class="form-control" readonly>
+    <input *ngIf="parqueoSeleccionado" type="text" name="monto" id="monto" class="form-control" readonly [(ngModel)]="montoPago">
     <div class="boton-contenedor">
-        <button type="submit" class="btn btn-success" onclick="">
+        <button type="submit" class="btn btn-success">
             Pagar
         </button>
     </div>
