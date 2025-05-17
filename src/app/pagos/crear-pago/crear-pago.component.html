@@ -2,7 +2,7 @@
     <label for="monto">Monto a pagar</label>
     <input *ngIf="parqueoSeleccionado" type="text" name="monto" id="monto" class="form-control" readonly [(ngModel)]="montoPago">
     <div class="boton-contenedor">
-        <button type="submit" class="btn btn-success">
+        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">
             Pagar
         </button>
     </div>
