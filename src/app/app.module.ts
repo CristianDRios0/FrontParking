@@ -7,6 +7,7 @@ import { LayoutModule } from './layout/layout.module';
 import { CeldasModule } from './celdas/celdas.module';
 import { ParqueoModule } from './parqueo/parqueo.module';
 import { PagosModule } from './pagos/pagos.module';
+import { VehiculoModule } from './vehiculo/vehiculo.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { PagosModule } from './pagos/pagos.module';
     LayoutModule,
     CeldasModule,
     ParqueoModule,
-    PagosModule
+    PagosModule,
+    VehiculoModule
   ],
   providers: [
     provideHttpClient()

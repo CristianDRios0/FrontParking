@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-layout',
@@ -8,4 +9,19 @@ import { Component } from '@angular/core';
 })
 export class LayoutComponent {
 
+  @ViewChild('crearVehiculoModal') crearVehiculoModal!: ElementRef;
+
+  private modal!: Modal;
+
+  ngAfterViewInit() {
+    if (this.crearVehiculoModal) {
+      this.modal = new Modal(this.crearVehiculoModal.nativeElement);
+    }
+  }
+
+  abrirModalCrearVehiculo() {
+    if (this.modal) {
+      this.modal.show();
+    }
+  }
 }

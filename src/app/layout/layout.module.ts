@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LayoutComponent } from './layout/layout.component';
 import { RouterModule, Routes } from '@angular/router';
 import { CeldasModule } from '../celdas/celdas.module';
+import { VehiculoModule } from '../vehiculo/vehiculo.module';
 
 const routes: Routes = [
   {
@@ -22,7 +23,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    CeldasModule
+    CeldasModule,
+    VehiculoModule
   ],
   exports: [
     RouterModule

@@ -5,7 +5,7 @@
         </header>
         <nav>
             <ul>
-                <li title="Registrar Vehículo" id="btnAbrirModalVehiculo"><i class="bi bi-car-front-fill"></i>
+                <li (click)="abrirModalCrearVehiculo()" title="Registrar Vehículo" id="btnAbrirModalVehiculo"><i class="bi bi-car-front-fill"></i>
                     <span class="link-text">
                         <span class="menu-line">Agregar</span>
                     </span>
@@ -30,3 +30,18 @@
     </div>
 </div>
 
+
+
+<div class="modal fade" id="crearVehiculoModal" tabindex="-1" aria-hidden="true" #crearVehiculoModal>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="crearVehiculoModalContent">
+        <div class="modal-header">
+            <h5 class="modal-title">Crear Vehiculo</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="formulariovehiculoBody">
+            <app-crear-vehiculo></app-crear-vehiculo>
+        </div>
+        </div>
+    </div>
+</div>
