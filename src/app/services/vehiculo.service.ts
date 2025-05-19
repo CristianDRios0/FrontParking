@@ -20,4 +20,8 @@ export class VehiculoService {
   getVehiculoById(id: number): Observable<Vehiculo>{
     return this._http.get<Vehiculo>(`${this.urlApi}/${id}`)
   }
+
+  postVehiculo(vehiculo: Vehiculo): Observable<any>{
+    return this._http.post(this.urlApi, vehiculo);
+  }
 }

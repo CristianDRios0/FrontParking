@@ -1,1 +1,13 @@
-<p>crear-vehiculo works!</p>
+<form #formVehiculo="ngForm" (ngSubmit)="crearVehiculo()">
+    <label for="placa">Placa</label>
+    <input type="text" class="form-control" placeholder="Ingrese la placa para el nuevo vehiculo" id="placa" name="placa" #placaInput="ngModel" required 
+    [(ngModel)]="vehiculoSeleccionado!.placa">
+    <div *ngIf="placaInput.invalid && placaInput.touched" class="error_alert">
+        Debes ingresar una placa para crear el vehiculo
+    </div>
+    <div class="boton-contenedor">
+        <button type="submit" class="btn btn-success" data-bs-dismiss="modal" [disabled]="formVehiculo.invalid">
+            Crear Vehiculo
+        </button>
+    </div>
+</form>
