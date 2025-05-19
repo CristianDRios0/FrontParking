@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Modal } from 'bootstrap';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-layout',
@@ -8,6 +9,8 @@ import { Modal } from 'bootstrap';
   styleUrl: './layout.component.css'
 })
 export class LayoutComponent {
+
+  constructor(private _authService: AuthService) {}
 
   @ViewChild('crearVehiculoModal') crearVehiculoModal!: ElementRef;
 
@@ -23,5 +26,10 @@ export class LayoutComponent {
     if (this.modal) {
       this.modal.show();
     }
+  }
+
+  logout() {
+    this._authService.logout();
+    window.location.reload();
   }
 }
