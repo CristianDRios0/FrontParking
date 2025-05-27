@@ -4,7 +4,7 @@
 }
 
 .form-control {
-    background-color: rgb(133, 146, 158);
+    background-color: rgb(84, 94, 102);
     color: rgb(51, 187, 255);
     border: 1px solid rgb(51, 187, 255);
     font-family: "Josefin Sans", sans-serif;
@@ -16,11 +16,11 @@
 }
 
 .form-control:focus {
-    background-color: rgb(108, 122, 137);
+    background-color: rgb(72, 80, 87);
     border-color: rgb(0, 230, 255);
     box-shadow: 0 0 5px rgba(0, 230, 255, 0.5);
     outline: none;
-    color: rgb(0, 230, 255);
+    color: white
 }
 
 label {
@@ -39,7 +39,12 @@ label {
     justify-content: center;
     font-family: "Josefin Sans", sans-serif;
     color: rgb(252, 59, 59);
-    font-size: 24px;
+    font-size: 15px;
     margin-top: 10px;
     padding: 0;
+}
+
+.btn {
+    height: 30px;
+    width: 120px;
 }

@@ -62,7 +62,7 @@
     color: rgb(51, 187, 255);
     font-family: "Bebas Neue", sans-serif;
     font-size: 30px;
-    align-items: center;
+    text-align: center;
 }
 
 .btn-close {
